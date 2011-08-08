@@ -1,4 +1,4 @@
-; drush make distro.make <target directory>
+; drush make --working-copy distro.make <target directory>
 
 api = 2
 core = 7.x
