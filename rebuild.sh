@@ -8,6 +8,8 @@ if [[ -z $makefile || ! -f $makefile ]]
 then
   echo "No makefile found. Please make sure you are in a profile directory with a valid makefile.";
 else
+  find . -name .DS_Store -print0 | xargs -0 rm
+
   # nuke existing modules, themes, and libraries
   for directory in ./modules/contrib ./themes/contrib ./libraries
   do

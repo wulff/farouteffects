@@ -41,7 +41,7 @@ projects[globalredirect][subdir] = contrib
 projects[globalredirect][version] = 1.3
 
 projects[i18n][subdir] = contrib
-projects[i18n][version] = 1.0-rc2
+projects[i18n][version] = 1.0-rc3
 
 projects[insert][subdir] = contrib
 projects[insert][version] = 1.1
@@ -80,6 +80,12 @@ projects[views][version] = 3.x-dev
 
 projects[ninesixty][subdir] = contrib
 projects[ninesixty][version] = 1.0
+
+projects[omega][subdir] = contrib
+projects[omega][version] = 3.0-rc3
+
+projects[sky][subdir] = contrib
+projects[sky][version] = 1.6
 
 ; libraries
 
