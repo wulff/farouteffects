@@ -216,6 +216,37 @@ function _farouteffects_enable_blocks() {
 }
 
 /**
+ * Create vocabularies.
+ */
+function _farouteffects_add_vocabularies() {
+  $vocabularies = array(
+    array(
+      'name' => st('Tags'),
+      'description' => st('Use tags to group content on similar topics into categories.'),
+      'machine_name' => 'farout_tags',
+      'help' => st('Enter a comma-separated list of words to describe your content.'),
+    ),
+    array(
+      'name' => st('Product category'),
+      'description' => st('Use categories to group similar products.'),
+      'machine_name' => 'farout_product_category',
+      'help' => st('Place the product in a cateogry'),
+    ),
+    array(
+      'name' => st('Project category'),
+      'description' => st('Use categories to group similar projects.'),
+      'machine_name' => 'farout_project_category',
+      'help' => st('Place the project in a cateogry'),
+    ),
+  );
+
+  foreach ($vocabularies as $vocabulary) {
+    $vocabulary = (object) $vocabulary;
+    taxonomy_vocabulary_save($vocabulary);
+  }
+}
+
+/**
  * Create content types.
  */
 function _farouteffects_add_content_types() {
@@ -259,6 +290,7 @@ function _farouteffects_add_content_types() {
     ),
   );
 
+  // set basic node type options
   foreach ($types as $type) {
     $type = node_type_set_defaults($type);
     node_type_save($type);
@@ -266,13 +298,440 @@ function _farouteffects_add_content_types() {
 
     // set content type defaults
     variable_set('comment_'. $type->type, COMMENT_NODE_HIDDEN);
-    variable_set('i18n_node_extended_'. $type->type, array());
-    variable_set('i18n_node_options_'. $type->type, array());
-    variable_set('language_content_type_'. $type->type, array());
+    variable_set('i18n_node_extended_'. $type->type, '1');
+    variable_set('i18n_node_options_'. $type->type, array('current', 'required'));
+    variable_set('language_content_type_'. $type->type, '2');
     variable_set('menu_options_'. $type->type, array());
     variable_set('node_options_'. $type->type, array('status'));
     variable_set('node_submitted_'. $type->type, FALSE);
   }
+
+  variable_set('menu_options_farout_page', array('main-menu'));
+  variable_set('menu_parent_farout_page', 'main-menu:0');
+}
+
+/**
+ * Add fields.
+ */
+function _farouteffects_add_fields() {
+  // taxonomy fields
+
+  $field = array(
+    'field_name' => 'field_farout_tags',
+    'type' => 'taxonomy_term_reference',
+    'cardinality' => FIELD_CARDINALITY_UNLIMITED,
+    'settings' => array(
+      'allowed_values' => array(
+        array(
+          'vocabulary' => 'farout_tags',
+          'parent' => 0,
+        ),
+      ),
+    ),
+  );
+  field_create_field($field);
+
+  $instance = array(
+    'field_name' => 'field_farout_tags',
+    'entity_type' => 'node',
+    'label' => 'Tags',
+    'bundle' => 'farout_product_display',
+    'description' => st('Enter a comma-separated list of words to describe your content.'),
+    'widget' => array(
+      'type' => 'taxonomy_autocomplete',
+      'weight' => -4,
+    ),
+    'display' => array(
+      'default' => array(
+        'type' => 'taxonomy_term_reference_link',
+        'weight' => 10,
+      ),
+      'teaser' => array(
+        'type' => 'taxonomy_term_reference_link',
+        'weight' => 10,
+      ),
+    ),
+  );
+  field_create_instance($instance);
+
+  $instance = array(
+    'field_name' => 'field_farout_tags',
+    'entity_type' => 'node',
+    'label' => 'Tags',
+    'bundle' => 'farout_project',
+    'description' => st('Enter a comma-separated list of words to describe your content.'),
+    'widget' => array(
+      'type' => 'taxonomy_autocomplete',
+      'weight' => -4,
+    ),
+    'display' => array(
+      'default' => array(
+        'type' => 'taxonomy_term_reference_link',
+        'weight' => 10,
+      ),
+      'teaser' => array(
+        'type' => 'taxonomy_term_reference_link',
+        'weight' => 10,
+      ),
+    ),
+  );
+  field_create_instance($instance);
+
+  $instance = array(
+    'field_name' => 'field_farout_tags',
+    'entity_type' => 'node',
+    'label' => 'Tags',
+    'bundle' => 'farout_story',
+    'description' => st('Enter a comma-separated list of words to describe your content.'),
+    'widget' => array(
+      'type' => 'taxonomy_autocomplete',
+      'weight' => -4,
+    ),
+    'display' => array(
+      'default' => array(
+        'type' => 'taxonomy_term_reference_link',
+        'weight' => 10,
+      ),
+      'teaser' => array(
+        'type' => 'taxonomy_term_reference_link',
+        'weight' => 10,
+      ),
+    ),
+  );
+  field_create_instance($instance);
+
+  $field = array(
+    'field_name' => 'field_farout_product_category',
+    'type' => 'taxonomy_term_reference',
+    'cardinality' => 1,
+    'settings' => array(
+      'allowed_values' => array(
+        array(
+          'vocabulary' => 'farout_product_category',
+          'parent' => 0,
+        ),
+      ),
+    ),
+  );
+  field_create_field($field);
+
+  $instance = array(
+    'field_name' => 'field_farout_product_category',
+    'entity_type' => 'node',
+    'label' => 'Category',
+    'bundle' => 'farout_product_display',
+    'description' => st('Select a product category.'),
+    'widget' => array(
+      'type' => 'options_select',
+      'weight' => -4,
+    ),
+    'display' => array(
+      'default' => array(
+        'type' => 'taxonomy_term_reference_link',
+        'weight' => 10,
+      ),
+      'teaser' => array(
+        'type' => 'taxonomy_term_reference_link',
+        'weight' => 10,
+      ),
+    ),
+  );
+  field_create_instance($instance);
+
+  $field = array(
+    'field_name' => 'field_farout_project_category',
+    'type' => 'taxonomy_term_reference',
+    'cardinality' => 1,
+    'settings' => array(
+      'allowed_values' => array(
+        array(
+          'vocabulary' => 'farout_project_category',
+          'parent' => 0,
+        ),
+      ),
+    ),
+  );
+  field_create_field($field);
+
+  $instance = array(
+    'field_name' => 'field_farout_project_category',
+    'entity_type' => 'node',
+    'label' => 'Category',
+    'bundle' => 'farout_project',
+    'description' => st('Select a project category.'),
+    'widget' => array(
+      'type' => 'options_select',
+      'weight' => -4,
+    ),
+    'display' => array(
+      'default' => array(
+        'type' => 'taxonomy_term_reference_link',
+        'weight' => 10,
+      ),
+      'teaser' => array(
+        'type' => 'taxonomy_term_reference_link',
+        'weight' => 10,
+      ),
+    ),
+  );
+  field_create_instance($instance);
+
+  // project images
+
+  $field = array(
+    'field_name' => 'field_farout_project_image',
+    'type' => 'image',
+    'cardinality' => FIELD_CARDINALITY_UNLIMITED,
+    'locked' => FALSE,
+    'indexes' => array('fid' => array('fid')),
+    'settings' => array(
+      'uri_scheme' => 'public',
+      'default_image' => FALSE,
+    ),
+    'storage' => array(
+      'type' => 'field_sql_storage',
+      'settings' => array(),
+    ),
+  );
+  field_create_field($field);
+
+  $instance = array(
+    'field_name' => 'field_farout_project_image',
+    'entity_type' => 'node',
+    'label' => 'Images',
+    'bundle' => 'farout_project',
+    'description' => st('Upload images to go with this project.'),
+    'required' => FALSE,
+
+    'settings' => array(
+      'file_directory' => 'projects',
+      'file_extensions' => 'png gif jpg jpeg',
+      'max_filesize' => '',
+      'max_resolution' => '',
+      'min_resolution' => '',
+      'alt_field' => '',
+      'title_field' => TRUE,
+    ),
+
+    'widget' => array(
+      'type' => 'image_image',
+      'settings' => array(
+        'progress_indicator' => 'throbber',
+        'preview_image_style' => 'thumbnail',
+      ),
+      'weight' => -1,
+    ),
+
+    'display' => array(
+      'default' => array(
+        'label' => 'hidden',
+        'type' => 'image',
+        'settings' => array('image_style' => 'large', 'image_link' => ''),
+        'weight' => -1,
+      ),
+      'teaser' => array(
+        'label' => 'hidden',
+        'type' => 'image',
+        'settings' => array('image_style' => 'medium', 'image_link' => 'content'),
+        'weight' => -1,
+      ),
+    ),
+  );
+  field_create_instance($instance);
+
+  // product images
+
+  $field = array(
+    'field_name' => 'field_farout_product_image',
+    'type' => 'image',
+    'cardinality' => FIELD_CARDINALITY_UNLIMITED,
+    'locked' => FALSE,
+    'indexes' => array('fid' => array('fid')),
+    'settings' => array(
+      'uri_scheme' => 'public',
+      'default_image' => FALSE,
+    ),
+    'storage' => array(
+      'type' => 'field_sql_storage',
+      'settings' => array(),
+    ),
+  );
+  field_create_field($field);
+
+  $instance = array(
+    'field_name' => 'field_farout_product_image',
+    'entity_type' => 'commerce_product',
+    'label' => st('Image'),
+    'bundle' => 'product',
+    'description' => st('Upload images for this product.'),
+    'required' => FALSE,
+
+    'settings' => array(
+      'file_directory' => 'images/products',
+      'file_extensions' => 'png gif jpg jpeg',
+      'max_filesize' => '',
+      'max_resolution' => '',
+      'min_resolution' => '',
+      'alt_field' => TRUE,
+      'title_field' => '',
+    ),
+
+    'widget' => array(
+      'type' => 'image_image',
+      'settings' => array(
+        'progress_indicator' => 'throbber',
+        'preview_image_style' => 'thumbnail',
+      ),
+      'weight' => -1,
+    ),
+
+    'display' => array(
+      'default' => array(
+        'label' => 'hidden',
+        'type' => 'image',
+        'settings' => array('image_style' => 'medium', 'image_link' => 'file'),
+        'weight' => -1,
+      ),
+      'full' => array(
+        'label' => 'hidden',
+        'type' => 'image',
+        'settings' => array('image_style' => 'medium', 'image_link' => 'file'),
+        'weight' => -1,
+      ),
+      'line_item' => array(
+        'label' => 'hidden',
+        'type' => 'image',
+        'settings' => array('image_style' => 'thumbnail', 'image_link' => ''),
+        'weight' => -1,
+      ),
+      'node_full' => array(
+        'label' => 'hidden',
+        'type' => 'image',
+        'settings' => array('image_style' => 'medium', 'image_link' => 'file'),
+        'weight' => -1,
+      ),
+      'node_teaser' => array(
+        'label' => 'hidden',
+        'type' => 'image',
+        'settings' => array('image_style' => 'thumbnail', 'image_link' => 'content'),
+        'weight' => -1,
+      ),
+      'node_rss' => array(
+        'label' => 'hidden',
+        'type' => 'image',
+        'settings' => array('image_style' => 'medium', 'image_link' => ''),
+        'weight' => -1,
+      ),
+    ),
+  );
+  field_create_instance($instance);
+
+  // inline images (page, story)
+
+  $field = array(
+    'field_name' => 'field_farout_inline_image',
+    'type' => 'image',
+    'cardinality' => FIELD_CARDINALITY_UNLIMITED,
+    'locked' => FALSE,
+    'indexes' => array('fid' => array('fid')),
+    'settings' => array(
+      'uri_scheme' => 'public',
+      'default_image' => FALSE,
+    ),
+    'storage' => array(
+      'type' => 'field_sql_storage',
+      'settings' => array(),
+    ),
+  );
+  field_create_field($field);
+
+  $instance = array(
+    'field_name' => 'field_farout_inline_image',
+    'entity_type' => 'node',
+    'label' => 'Images',
+    'bundle' => 'farout_page',
+    'description' => st('Upload images for use in the body of this page.'),
+    'required' => FALSE,
+
+    'settings' => array(
+      'file_directory' => 'inline/page',
+      'file_extensions' => 'png gif jpg jpeg',
+      'max_filesize' => '',
+      'max_resolution' => '',
+      'min_resolution' => '',
+      'alt_field' => '',
+      'title_field' => TRUE,
+    ),
+
+    'widget' => array(
+      'type' => 'image_image',
+      'settings' => array(
+        'progress_indicator' => 'throbber',
+        'preview_image_style' => 'thumbnail',
+      ),
+      'weight' => -1,
+    ),
+
+    'display' => array(
+      'default' => array(
+        'label' => 'hidden',
+        'type' => 'image',
+        'settings' => array('image_style' => 'large', 'image_link' => ''),
+        'weight' => -1,
+      ),
+      'teaser' => array(
+        'label' => 'hidden',
+        'type' => 'image',
+        'settings' => array('image_style' => 'medium', 'image_link' => 'content'),
+        'weight' => -1,
+      ),
+    ),
+  );
+  field_create_instance($instance);
+
+  $instance = array(
+    'field_name' => 'field_farout_inline_image',
+    'entity_type' => 'node',
+    'label' => 'Images',
+    'bundle' => 'farout_story',
+    'description' => st('Upload images for use in the body of this story.'),
+    'required' => FALSE,
+
+    'settings' => array(
+      'file_directory' => 'inline/story',
+      'file_extensions' => 'png gif jpg jpeg',
+      'max_filesize' => '',
+      'max_resolution' => '',
+      'min_resolution' => '',
+      'alt_field' => '',
+      'title_field' => TRUE,
+    ),
+
+    'widget' => array(
+      'type' => 'image_image',
+      'settings' => array(
+        'progress_indicator' => 'throbber',
+        'preview_image_style' => 'thumbnail',
+      ),
+      'weight' => -1,
+    ),
+
+    'display' => array(
+      'default' => array(
+        'label' => 'hidden',
+        'type' => 'image',
+        'settings' => array('image_style' => 'large', 'image_link' => ''),
+        'weight' => -1,
+      ),
+      'teaser' => array(
+        'label' => 'hidden',
+        'type' => 'image',
+        'settings' => array('image_style' => 'medium', 'image_link' => 'content'),
+        'weight' => -1,
+      ),
+    ),
+  );
+  field_create_instance($instance);
 }
 
 /**
@@ -386,80 +845,6 @@ function _farouteffects_update_variables() {
     'favicon_upload' => '',
   );
   variable_set('theme_bartik_settings', $theme_bartik_settings);
-}
-
-/**
- * Creates an image field on the specified entity bundle.
- */
-function _farouteffects_create_product_image_field($entity_type, $bundle) {
-  // Add a default image field to the specified product type.
-  $instance = array(
-    'field_name' => 'field_image',
-    'entity_type' => $entity_type,
-    'label' => st('Image'),
-    'bundle' => $bundle,
-    'description' => st('Upload an image for this product.'),
-    'required' => FALSE,
-
-    'settings' => array(
-      'file_directory' => 'field/image',
-      'file_extensions' => 'png gif jpg jpeg',
-      'max_filesize' => '',
-      'max_resolution' => '',
-      'min_resolution' => '',
-      'alt_field' => TRUE,
-      'title_field' => '',
-    ),
-
-    'widget' => array(
-      'type' => 'image_image',
-      'settings' => array(
-        'progress_indicator' => 'throbber',
-        'preview_image_style' => 'thumbnail',
-      ),
-      'weight' => -1,
-    ),
-
-    'display' => array(
-      'default' => array(
-        'label' => 'hidden',
-        'type' => 'image',
-        'settings' => array('image_style' => 'medium', 'image_link' => 'file'),
-        'weight' => -1,
-      ),
-      'full' => array(
-        'label' => 'hidden',
-        'type' => 'image',
-        'settings' => array('image_style' => 'medium', 'image_link' => 'file'),
-        'weight' => -1,
-      ),
-      'line_item' => array(
-        'label' => 'hidden',
-        'type' => 'image',
-        'settings' => array('image_style' => 'thumbnail', 'image_link' => ''),
-        'weight' => -1,
-      ),
-      'node_full' => array(
-        'label' => 'hidden',
-        'type' => 'image',
-        'settings' => array('image_style' => 'medium', 'image_link' => 'file'),
-        'weight' => -1,
-      ),
-      'node_teaser' => array(
-        'label' => 'hidden',
-        'type' => 'image',
-        'settings' => array('image_style' => 'thumbnail', 'image_link' => 'content'),
-        'weight' => -1,
-      ),
-      'node_rss' => array(
-        'label' => 'hidden',
-        'type' => 'image',
-        'settings' => array('image_style' => 'medium', 'image_link' => ''),
-        'weight' => -1,
-      ),
-    ),
-  );
-  field_create_instance($instance);
 }
 
 /**

@@ -17,7 +17,7 @@ projects[advanced_help][subdir] = contrib
 projects[advanced_help][version] = 1.0-beta1
 
 projects[commerce][subdir] = contrib
-projects[commerce][version] = 1.x-dev
+projects[commerce][version] = 1.0-rc3
 
 projects[commerce_paypal][subdir] = contrib
 projects[commerce_paypal][version] = 1.x-dev
@@ -71,7 +71,7 @@ projects[strongarm][subdir] = contrib
 projects[strongarm][version] = 2.0-beta2
 
 projects[variable][subdir] = contrib
-projects[variable][version] = 1.0
+projects[variable][version] = 1.1
 
 projects[views][subdir] = contrib
 projects[views][version] = 3.x-dev

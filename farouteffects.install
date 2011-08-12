@@ -2,7 +2,8 @@
 
 /**
  * @file
- * Install file for the Far Out Effects site. Based on Commerce Kickstart.
+ * Install file for the Far Out Effects site. Based on Commerce Kickstart
+ * and Localized Install.
  */
 
 /* --- HOOKS ---------------------------------------------------------------- */
@@ -13,9 +14,17 @@
 function farouteffects_install() {
   _farouteffects_add_default_text_format();
   _farouteffects_enable_blocks();
+  _farouteffects_add_vocabularies();
   _farouteffects_add_content_types();
+  _farouteffects_add_fields();
   _farouteffects_add_menu_items();
   _farouteffects_add_shortcuts();
   _farouteffects_update_permissions();
   _farouteffects_update_variables();
 }
+
+/**
+ * Implements hook_update_N().
+ */
+//function farouteffects_update_7100() {
+//}
