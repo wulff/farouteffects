@@ -58,6 +58,9 @@ projects[markdown][version] = 1.0
 projects[menu_block][subdir] = contrib
 projects[menu_block][version] = 2.2
 
+projects[migrate][subdir] = contrib
+projects[migrate][version] = 2.1
+
 projects[pathauto][subdir] = contrib
 projects[pathauto][version] = 1.0-rc2
 

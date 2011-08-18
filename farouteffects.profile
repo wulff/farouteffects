@@ -6,6 +6,8 @@
  * and Localized Install.
  */
 
+// TODO: move variable definitions to strongarm.inc
+
 /* --- HOOKS ---------------------------------------------------------------- */
 
 /**
@@ -561,7 +563,7 @@ function _farouteffects_add_fields() {
   $instance = array(
     'field_name' => 'field_farout_product_image',
     'entity_type' => 'commerce_product',
-    'label' => st('Image'),
+    'label' => st('Images'),
     'bundle' => 'product',
     'description' => st('Upload images for this product.'),
     'required' => FALSE,
@@ -732,6 +734,46 @@ function _farouteffects_add_fields() {
     ),
   );
   field_create_instance($instance);
+
+  // product reference
+
+  // Add a product reference field to the Product display node type.
+  $field = array(
+    'field_name' => 'farout_product_ref',
+    'type' => 'commerce_product_reference',
+    'cardinality' => FIELD_CARDINALITY_UNLIMITED,
+    'translatable' => FALSE,
+  );
+  field_create_field($field);
+
+  $instance = array(
+    'field_name' => 'farout_product_ref',
+    'entity_type' => 'node',
+    'label' => st('Product'),
+    'bundle' => 'farout_product_display',
+    'description' => st('Choose the product(s) to display for sale on this node by SKU. Enter multiple SKUs using a comma separated list.'),
+    'required' => TRUE,
+
+    'widget' => array(
+      'type' => 'commerce_product_reference_autocomplete',
+    ),
+
+    'display' => array(
+      'default' => array(
+        'label' => 'hidden',
+        'type' => 'commerce_cart_add_to_cart_form',
+      ),
+      'full' => array(
+        'label' => 'hidden',
+        'type' => 'commerce_cart_add_to_cart_form',
+      ),
+      'teaser' => array(
+        'label' => 'hidden',
+        'type' => 'commerce_cart_add_to_cart_form',
+      ),
+    ),
+  );
+  field_create_instance($instance);
 }
 
 /**
@@ -806,7 +848,6 @@ function _farouteffects_update_variables() {
 
   // time and date
   variable_set('date_first_day', 1);
-//  variable_set('date_default_timezone', 'Europe/Copenhagen'); // TODO: necessary?
   variable_set('configurable_timezones', 0);
 
   // internationalization
@@ -827,6 +868,29 @@ function _farouteffects_update_variables() {
   // miscellaneous settings
   variable_set('views_hide_help_message', TRUE);
 
+  theme_enable(array('ash'));
+  variable_set('theme_default', 'ash');
+
+  $theme_ash_settings = array(
+    'toggle_logo' => 1,
+    'toggle_name' => 0,
+    'toggle_slogan' => 0,
+    'toggle_node_user_picture' => 1,
+    'toggle_comment_user_picture' => 1,
+    'toggle_comment_user_verification' => 1,
+    'toggle_favicon' => 1,
+    'toggle_main_menu' => 1,
+    'toggle_secondary_menu' => 1,
+    'default_logo' => 0,
+    'logo_path' => 'profiles/farouteffects/assets/logo-small.png',
+    'logo_upload' => '',
+    'default_favicon' => 0,
+    'favicon_path' => 'profiles/farouteffects/assets/favicon.ico',
+    'favicon_upload' => '',
+    'favicon_mimetype' => 'image/vnd.microsoft.icon',
+  );
+  variable_set('theme_ash_settings', $theme_ash_settings);
+
   $theme_bartik_settings = array (
     'toggle_logo' => 0,
     'toggle_name' => 1,
@@ -845,47 +909,28 @@ function _farouteffects_update_variables() {
     'favicon_upload' => '',
   );
   variable_set('theme_bartik_settings', $theme_bartik_settings);
-}
 
-/**
- * Creates a product reference field on the specified entity bundle.
- */
-function _farouteffects_create_product_reference($entity_type, $bundle, $field_name = 'field_product') {
-  // Add a product reference field to the Product display node type.
-  $field = array(
-    'field_name' => $field_name,
-    'type' => 'commerce_product_reference',
-    'cardinality' => FIELD_CARDINALITY_UNLIMITED,
-    'translatable' => FALSE,
+  // TODO: necessary?
+  menu_rebuild();
+
+  // commerce settings
+  variable_set('commerce_default_currency', 'DKK');
+  variable_set('commerce_enabled_currencies', array('DKK' => 'DKK', 'EUR' => 'EUR', 'USD' => 'USD'));
+
+  // get rid of sales tax
+  commerce_tax_ui_tax_type_delete('vat');
+
+  // add danish vat
+  $tax_rate = commerce_tax_ui_tax_rate_new('danish_vat');
+  $tax_rate['name'] = 'farout_vat';
+  $tax_rate['title'] = 'MOMS';
+  $tax_rate['description'] = 'Dansk MOMS';
+  $tax_rate['rate'] = 0.25;
+  commerce_tax_ui_tax_rate_save($tax_rate);
+
+  $completion_message = array(
+    'value' => 'Your order is number [commerce-order:order-number]. You can <a href="[commerce-order:url]">view your order</a> on your account page when logged in.',
+    'format' => 'default',
   );
-  field_create_field($field);
-
-  $instance = array(
-    'field_name' => $field_name,
-    'entity_type' => $entity_type,
-    'label' => st('Product'),
-    'bundle' => $bundle,
-    'description' => st('Choose the product(s) to display for sale on this node by SKU. Enter multiple SKUs using a comma separated list.'),
-    'required' => TRUE,
-
-    'widget' => array(
-      'type' => 'commerce_product_reference_autocomplete',
-    ),
-
-    'display' => array(
-      'default' => array(
-        'label' => 'hidden',
-        'type' => 'commerce_cart_add_to_cart_form',
-      ),
-      'full' => array(
-        'label' => 'hidden',
-        'type' => 'commerce_cart_add_to_cart_form',
-      ),
-      'teaser' => array(
-        'label' => 'hidden',
-        'type' => 'commerce_cart_add_to_cart_form',
-      ),
-    ),
-  );
-  field_create_instance($instance);
+  variable_set('commerce_checkout_completion_message', $completion_message);
 }
