@@ -1,4 +1,5 @@
 .DS_Store
 libraries
 modules/contrib
+modules/custom/farout_migrate/import/*
 themes/contrib

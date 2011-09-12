@@ -11,13 +11,13 @@ projects[admin_menu][subdir] = contrib
 projects[admin_menu][version] = 3.0-rc1
 
 projects[addressfield][subdir] = contrib
-projects[addressfield][version] = 1.x-dev
+projects[addressfield][version] = 1.0-beta2
 
 projects[advanced_help][subdir] = contrib
 projects[advanced_help][version] = 1.0-beta1
 
 projects[commerce][subdir] = contrib
-projects[commerce][version] = 1.0-rc3
+projects[commerce][version] = 1.0
 
 projects[commerce_paypal][subdir] = contrib
 projects[commerce_paypal][version] = 1.x-dev
@@ -41,7 +41,7 @@ projects[globalredirect][subdir] = contrib
 projects[globalredirect][version] = 1.3
 
 projects[i18n][subdir] = contrib
-projects[i18n][version] = 1.0-rc3
+projects[i18n][version] = 1.0
 
 projects[insert][subdir] = contrib
 projects[insert][version] = 1.1
@@ -67,11 +67,11 @@ projects[pathauto][version] = 1.0-rc2
 projects[rules][subdir] = contrib
 projects[rules][version] = 2.x-dev
 
-projects[token][subdir] = contrib
-projects[token][version] = 1.0-beta3
-
 projects[strongarm][subdir] = contrib
 projects[strongarm][version] = 2.0-beta2
+
+projects[token][subdir] = contrib
+projects[token][version] = 1.0-beta5
 
 projects[variable][subdir] = contrib
 projects[variable][version] = 1.1
