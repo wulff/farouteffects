@@ -1,0 +1,14 @@
+<?php
+/**
+ * @file
+ * Move data from old gallery to new site.
+ */
+
+/* --- HOOKS --------------------------------------------------------------- */
+
+/**
+ * Implements hook_migrate_api().
+ */
+function farout_migrate_migrate_api() {
+  return array('api' => 2);
+}
