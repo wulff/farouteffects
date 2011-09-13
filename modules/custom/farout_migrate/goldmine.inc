@@ -41,14 +41,13 @@ class FarOutGoldmineNodeMigration extends FarOutGoldmineMigration {
     // source
 
     $query = db_select('temp_farout.cpg148_pictures', 'pictures')
-             ->fields('pictures', array('pid', 'aid', 'filepath', 'filename', 'title', 'caption', 'keywords'))
-             ->condition('pid', 1, '=');
+             ->fields('pictures', array('pid', 'aid', 'filepath', 'filename', 'title', 'caption', 'keywords'));
     $query->addExpression('CONCAT(filepath, filename)', 'image');
     $this->source = new MigrateSourceSQL($query);
 
     // destination
 
-    $this->destination = new MigrateDestinationNode('farout_project');
+    $this->destination = new MigrateDestinationNode('farout_product_display');
 
     // mappings (destination, source)
 
@@ -56,6 +55,9 @@ class FarOutGoldmineNodeMigration extends FarOutGoldmineMigration {
          ->description(t('Mapping picture title in source to node title'));
     $this->addFieldMapping('body', 'caption')
          ->description(t('Mapping picture description in source to node body'));
+
+    $this->addFieldMapping('field_farout_product_category', 'aid')
+         ->description(t('Mapping picture album in source to category taxonomy'));
 
     $arguments = MigrateFileFieldHandler::arguments(
       drupal_get_path('module', 'farout_migrate') . '/import/',
@@ -65,15 +67,58 @@ class FarOutGoldmineNodeMigration extends FarOutGoldmineMigration {
       array('source_field' => 'title'),
       array('source_field' => 'title')
     );
-    $this->addFieldMapping('field_farout_project_image', 'image')
+    $this->addFieldMapping('field_farout_product_display_img', 'image')
          ->arguments($arguments)
          ->description(t('Mapping picture in source to image field'));
 
     // unmapped source fields
 
-    $this->addUnmigratedSources(array('aid', 'filename', 'filepath', 'keywords'));
+    $this->addUnmigratedSources(array('filename', 'filepath', 'keywords'));
 
     // unmapped destination fields
-    $this->addUnmigratedDestinations(array('is_new', 'uid', 'revision_uid', 'created', 'changed', 'status', 'promote', 'sticky', 'revision', 'language', 'field_farout_tags', 'field_farout_project_category', 'path', 'comment'));
+
+    $this->addUnmigratedDestinations(array('is_new', 'uid', 'revision_uid', 'created', 'changed', 'status', 'promote', 'sticky', 'revision', 'language', 'field_farout_tags', 'farout_product_ref', 'path', 'comment'));
+  }
+
+  public function prepareRow($current_row) {
+    // fix encoding of titles and captions
+    $current_row->title = utf8_decode($current_row->title);
+    $current_row->caption = utf8_decode($current_row->caption);
+
+    // map album IDs to term names
+    $name = '';
+    switch ($current_row->aid) {
+      case 1:
+        $name = 'Special effects makeup';
+        break;
+      case 2:
+        $name = 'Teeth, claws, and makeup';
+        break;
+      case 3:
+        $name = 'Zagone Studios';
+        break;
+      case 4:
+        $name = 'Other mask work';
+        break;
+      case 5:
+        $name = 'Props and displays';
+        break;
+      case 6:
+        $name = 'Sculpts and designs';
+        break;
+      case 7:
+        $name = 'Suits and costumes';
+        break;
+      case 11:
+        $name = 'Skulls, bones, and chains';
+        break;
+      case 10:
+        $name = 'Custom stuff';
+        break;
+    }
+
+    $parents = taxonomy_get_term_by_name($name);
+    $parent = array_shift($parents);
+    $current_row->aid = $parent->name;
   }
 }

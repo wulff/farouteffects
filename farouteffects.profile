@@ -218,7 +218,7 @@ function _farouteffects_enable_blocks() {
 }
 
 /**
- * Create vocabularies.
+ * Create vocabularies and terms.
  */
 function _farouteffects_add_vocabularies() {
   $vocabularies = array(
@@ -229,22 +229,109 @@ function _farouteffects_add_vocabularies() {
       'help' => st('Enter a comma-separated list of words to describe your content.'),
     ),
     array(
-      'name' => st('Product category'),
-      'description' => st('Use categories to group similar products.'),
+      'name' => st('Category'),
+      'description' => st('Use categories to group similar products and projects.'),
       'machine_name' => 'farout_product_category',
       'help' => st('Place the product in a cateogry'),
-    ),
-    array(
-      'name' => st('Project category'),
-      'description' => st('Use categories to group similar projects.'),
-      'machine_name' => 'farout_project_category',
-      'help' => st('Place the project in a cateogry'),
     ),
   );
 
   foreach ($vocabularies as $vocabulary) {
     $vocabulary = (object) $vocabulary;
     taxonomy_vocabulary_save($vocabulary);
+  }
+
+  $vocabulary = taxonomy_vocabulary_machine_name_load('farout_product_category');
+
+  // parent terms
+
+  $terms =array(
+    array(
+      'vid' => $vocabulary->vid,
+      'name' => 'Shop',
+      'weight' => 1,
+    ),
+    array(
+      'vid' => $vocabulary->vid,
+      'name' => 'Portfolio',
+      'weight' => 2,
+    ),
+  );
+
+  foreach ($terms as $term) {
+    $term = (object) $term;
+    taxonomy_term_save($term);
+  }
+
+  // shop terms
+
+  $parents = taxonomy_get_term_by_name('Shop');
+  $parent = array_shift($parents);
+
+  $terms =array(
+    array(
+      'vid' => $vocabulary->vid,
+      'name' => 'Teeth, claws, and makeup',
+      'parent' => $parent->tid,
+    ),
+    array(
+      'vid' => $vocabulary->vid,
+      'name' => 'Zagone Studios',
+      'parent' => $parent->tid,
+    ),
+    array(
+      'vid' => $vocabulary->vid,
+      'name' => 'Skulls, bones, and chains',
+      'parent' => $parent->tid,
+    ),
+    array(
+      'vid' => $vocabulary->vid,
+      'name' => 'Custom stuff',
+      'parent' => $parent->tid,
+    ),
+  );
+
+  foreach ($terms as $term) {
+    $term = (object) $term;
+    taxonomy_term_save($term);
+  }
+
+  // portfolio terms
+
+  $parents = taxonomy_get_term_by_name('Portfolio');
+  $parent = array_shift($parents);
+
+  $terms =array(
+    array(
+      'vid' => $vocabulary->vid,
+      'name' => 'Special effects makeup',
+      'parent' => $parent->tid,
+    ),
+    array(
+      'vid' => $vocabulary->vid,
+      'name' => 'Other mask work',
+      'parent' => $parent->tid,
+    ),
+    array(
+      'vid' => $vocabulary->vid,
+      'name' => 'Props and displays',
+      'parent' => $parent->tid,
+    ),
+    array(
+      'vid' => $vocabulary->vid,
+      'name' => 'Sculpts and designs',
+      'parent' => $parent->tid,
+    ),
+    array(
+      'vid' => $vocabulary->vid,
+      'name' => 'Suits and costumes',
+      'parent' => $parent->tid,
+    ),
+  );
+
+  foreach ($terms as $term) {
+    $term = (object) $term;
+    taxonomy_term_save($term);
   }
 }
 
@@ -258,16 +345,7 @@ function _farouteffects_add_content_types() {
       'type' => 'farout_product_display',
       'name' => st('Product display'),
       'base' => 'node_content',
-      'description' => st('Use <em>product displays</em> to present Add to Cart form for products to your customers.'),
-      'custom' => 1,
-      'modified' => 1,
-      'locked' => 0,
-    ),
-    array(
-      'type' => 'farout_project',
-      'name' => st('Project'),
-      'base' => 'node_content',
-      'description' => st('Use <em>projects</em> to add content to the portfolio section.'),
+      'description' => st('Use <em>product displays</em> to present products and portfolio items. Link product displays to products to make it possible for your customers to add them to the cart.'),
       'custom' => 1,
       'modified' => 1,
       'locked' => 0,
@@ -283,9 +361,9 @@ function _farouteffects_add_content_types() {
     ),
     array(
       'type' => 'farout_page',
-      'name' => st('Static page'),
+      'name' => st('Page'),
       'base' => 'node_content',
-      'description' => st("Use <em>basic pages</em> for your static content, such as an 'About us' page."),
+      'description' => st("Use <em>pages</em> for your static content, such as an 'About us' page."),
       'custom' => 1,
       'modified' => 1,
       'locked' => 0,
@@ -338,29 +416,6 @@ function _farouteffects_add_fields() {
     'entity_type' => 'node',
     'label' => 'Tags',
     'bundle' => 'farout_product_display',
-    'description' => st('Enter a comma-separated list of words to describe your content.'),
-    'widget' => array(
-      'type' => 'taxonomy_autocomplete',
-      'weight' => -4,
-    ),
-    'display' => array(
-      'default' => array(
-        'type' => 'taxonomy_term_reference_link',
-        'weight' => 10,
-      ),
-      'teaser' => array(
-        'type' => 'taxonomy_term_reference_link',
-        'weight' => 10,
-      ),
-    ),
-  );
-  field_create_instance($instance);
-
-  $instance = array(
-    'field_name' => 'field_farout_tags',
-    'entity_type' => 'node',
-    'label' => 'Tags',
-    'bundle' => 'farout_project',
     'description' => st('Enter a comma-separated list of words to describe your content.'),
     'widget' => array(
       'type' => 'taxonomy_autocomplete',
@@ -440,48 +495,10 @@ function _farouteffects_add_fields() {
   );
   field_create_instance($instance);
 
-  $field = array(
-    'field_name' => 'field_farout_project_category',
-    'type' => 'taxonomy_term_reference',
-    'cardinality' => 1,
-    'settings' => array(
-      'allowed_values' => array(
-        array(
-          'vocabulary' => 'farout_project_category',
-          'parent' => 0,
-        ),
-      ),
-    ),
-  );
-  field_create_field($field);
-
-  $instance = array(
-    'field_name' => 'field_farout_project_category',
-    'entity_type' => 'node',
-    'label' => 'Category',
-    'bundle' => 'farout_project',
-    'description' => st('Select a project category.'),
-    'widget' => array(
-      'type' => 'options_select',
-      'weight' => -4,
-    ),
-    'display' => array(
-      'default' => array(
-        'type' => 'taxonomy_term_reference_link',
-        'weight' => 10,
-      ),
-      'teaser' => array(
-        'type' => 'taxonomy_term_reference_link',
-        'weight' => 10,
-      ),
-    ),
-  );
-  field_create_instance($instance);
-
-  // project images
+  // product display images
 
   $field = array(
-    'field_name' => 'field_farout_project_image',
+    'field_name' => 'field_farout_product_display_img',
     'type' => 'image',
     'cardinality' => FIELD_CARDINALITY_UNLIMITED,
     'locked' => FALSE,
@@ -498,15 +515,15 @@ function _farouteffects_add_fields() {
   field_create_field($field);
 
   $instance = array(
-    'field_name' => 'field_farout_project_image',
+    'field_name' => 'field_farout_product_display_img',
     'entity_type' => 'node',
     'label' => 'Images',
-    'bundle' => 'farout_project',
-    'description' => st('Upload images to go with this project.'),
+    'bundle' => 'farout_product_display',
+    'description' => st('Upload images to go with this product.'),
     'required' => FALSE,
 
     'settings' => array(
-      'file_directory' => 'projects',
+      'file_directory' => 'projects', // TODO: change?
       'file_extensions' => 'png gif jpg jpeg',
       'max_filesize' => '',
       'max_resolution' => '',
@@ -535,93 +552,6 @@ function _farouteffects_add_fields() {
         'label' => 'hidden',
         'type' => 'image',
         'settings' => array('image_style' => 'medium', 'image_link' => 'content'),
-        'weight' => -1,
-      ),
-    ),
-  );
-  field_create_instance($instance);
-
-  // product images
-
-  $field = array(
-    'field_name' => 'field_farout_product_image',
-    'type' => 'image',
-    'cardinality' => FIELD_CARDINALITY_UNLIMITED,
-    'locked' => FALSE,
-    'indexes' => array('fid' => array('fid')),
-    'settings' => array(
-      'uri_scheme' => 'public',
-      'default_image' => FALSE,
-    ),
-    'storage' => array(
-      'type' => 'field_sql_storage',
-      'settings' => array(),
-    ),
-  );
-  field_create_field($field);
-
-  $instance = array(
-    'field_name' => 'field_farout_product_image',
-    'entity_type' => 'commerce_product',
-    'label' => st('Images'),
-    'bundle' => 'product',
-    'description' => st('Upload images for this product.'),
-    'required' => FALSE,
-
-    'settings' => array(
-      'file_directory' => 'images/products',
-      'file_extensions' => 'png gif jpg jpeg',
-      'max_filesize' => '',
-      'max_resolution' => '',
-      'min_resolution' => '',
-      'alt_field' => TRUE,
-      'title_field' => '',
-    ),
-
-    'widget' => array(
-      'type' => 'image_image',
-      'settings' => array(
-        'progress_indicator' => 'throbber',
-        'preview_image_style' => 'thumbnail',
-      ),
-      'weight' => -1,
-    ),
-
-    'display' => array(
-      'default' => array(
-        'label' => 'hidden',
-        'type' => 'image',
-        'settings' => array('image_style' => 'medium', 'image_link' => 'file'),
-        'weight' => -1,
-      ),
-      'full' => array(
-        'label' => 'hidden',
-        'type' => 'image',
-        'settings' => array('image_style' => 'medium', 'image_link' => 'file'),
-        'weight' => -1,
-      ),
-      'line_item' => array(
-        'label' => 'hidden',
-        'type' => 'image',
-        'settings' => array('image_style' => 'thumbnail', 'image_link' => ''),
-        'weight' => -1,
-      ),
-      'node_full' => array(
-        'label' => 'hidden',
-        'type' => 'image',
-        'settings' => array('image_style' => 'medium', 'image_link' => 'file'),
-        'weight' => -1,
-      ),
-      'node_teaser' => array(
-        'label' => 'hidden',
-        'type' => 'image',
-        'settings' => array('image_style' => 'thumbnail', 'image_link' => 'content'),
-        'weight' => -1,
-      ),
-      'node_rss' => array(
-        'label' => 'hidden',
-        'type' => 'image',
-        'settings' => array('image_style' => 'medium', 'image_link' => ''),
         'weight' => -1,
       ),
     ),
@@ -671,7 +601,7 @@ function _farouteffects_add_fields() {
         'progress_indicator' => 'throbber',
         'preview_image_style' => 'thumbnail',
       ),
-      'weight' => -1,
+      'weight' => 2,
     ),
 
     'display' => array(
@@ -715,7 +645,7 @@ function _farouteffects_add_fields() {
         'progress_indicator' => 'throbber',
         'preview_image_style' => 'thumbnail',
       ),
-      'weight' => -1,
+      'weight' => 2,
     ),
 
     'display' => array(
@@ -752,7 +682,7 @@ function _farouteffects_add_fields() {
     'label' => st('Product'),
     'bundle' => 'farout_product_display',
     'description' => st('Choose the product(s) to display for sale on this node by SKU. Enter multiple SKUs using a comma separated list.'),
-    'required' => TRUE,
+    'required' => FALSE,
 
     'widget' => array(
       'type' => 'commerce_product_reference_autocomplete',
@@ -783,10 +713,10 @@ function _farouteffects_add_shortcuts() {
   $set = new stdClass;
   $set->title = st('Site administration');
   $set->links = array(
-    array('link_path' => 'admin/commerce/products/add', 'link_title' => st('Add product'), 'weight' => 1),
+    array('link_path' => 'admin/commerce/products/add', 'link_title' => st('Add SKU'), 'weight' => 1),
     array('link_path' => 'node/add/farout-product-display', 'link_title' => st('Add product display'), 'weight' => 2),
-    array('link_path' => 'node/add/farout-project', 'link_title' => st('Add project'), 'weight' => 3),
-    array('link_path' => 'node/add/farout-story', 'link_title' => st('Add story'), 'weight' => 4),
+    array('link_path' => 'node/add/farout-story', 'link_title' => st('Add story'), 'weight' => 3),
+    array('link_path' => 'node/add/farout-page', 'link_title' => st('Add page'), 'weight' => 4),
     array('link_path' => 'admin/commerce/products', 'link_title' => st('View products'), 'weight' => 5),
     array('link_path' => 'admin/commerce/orders', 'link_title' => st('View orders'), 'weight' => 6),
   );

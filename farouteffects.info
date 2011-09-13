@@ -36,7 +36,7 @@ dependencies[] = addressfield
 ;dependencies[] = admin_menu_toolbar
 dependencies[] = ctools
 dependencies[] = demo
-;dependencies[] = devel
+dependencies[] = devel
 dependencies[] = entity
 dependencies[] = entity_token
 dependencies[] = globalredirect
@@ -49,6 +49,8 @@ dependencies[] = insert
 ;dependencies[] = l10n_client
 dependencies[] = l10n_update
 dependencies[] = menu_block
+dependencies[] = migrate
+dependencies[] = migrate_ui
 dependencies[] = pathauto
 dependencies[] = rules
 dependencies[] = rules_admin
@@ -84,5 +86,9 @@ dependencies[] = commerce_tax
 dependencies[] = commerce_tax_ui
 
 ; custom modules
+
+dependencies[] = farout_migrate
+
+; files
 
 files[] = farouteffects.profile
