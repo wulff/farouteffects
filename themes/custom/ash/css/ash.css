@@ -25,3 +25,105 @@
 .views-view-grid .node-teaser .field-type-image img {
   margin-bottom: 0;
 }
+
+ul.menu li.active-trail a {
+  font-weight: bold;
+}
+
+/* taxonomy term grid */
+
+.view-farout-taxonomy-term .view-content .item-list ul  {
+  margin: 0;
+  padding: 0;
+}
+.view-farout-taxonomy-term .view-content .item-list ul li {
+  list-style-type: none;
+  margin: 0 10px 10px 0;
+  padding: 0;
+  float: left;
+  width: 165px;
+  position: relative;
+  line-height: 0.1;
+  background-color: #feddef;
+}
+.view-farout-taxonomy-term .view-content .item-list ul li.views-row-4,
+.view-farout-taxonomy-term .view-content .item-list ul li.views-row-8,
+.view-farout-taxonomy-term .view-content .item-list ul li.views-row-12,
+.view-farout-taxonomy-term .view-content .item-list ul li.views-row-16 {
+  margin-right: 0;
+}
+.view-farout-taxonomy-term .view-content .item-list ul li .views-field-title {
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0.7);
+  padding: 5px 5px 7px 5px;
+  width: 155px;
+  bottom: 0px;
+}
+.view-farout-taxonomy-term .view-content .item-list ul li .views-field-title a {
+  color: #fff;
+  line-height: 1.1;
+}
+
+a.feed-icon {
+  clear: both;
+  display: block;
+}
+
+/* featured products */
+
+.view-featured-products .view-content .item-list ul  {
+  margin: 0;
+  padding: 0;
+}
+.view-featured-products .view-content .item-list ul li {
+  list-style-type: none;
+  margin: 0 30px 0 0;
+  padding: 0;
+  float: left;
+  width: 210px;
+  position: relative;
+  line-height: 0.1;
+  background-color: #feddef;
+}
+.view-featured-products .view-content .item-list ul li.views-row-4 {
+  margin-right: 0;
+}
+.view-featured-products .view-content .item-list ul li .views-field-title {
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0.7);
+  padding: 5px 5px 7px 5px;
+  width: 200px;
+  bottom: 0px;
+}
+.view-featured-products .view-content .item-list ul li .views-field-title a {
+  color: #fff;
+  line-height: 1.1;
+  text-align: normal;
+  text-shadow: none;
+  font-size: 80%;
+}
+
+/* fix bartik alignment */
+
+#logo {
+  padding-left: 14px;
+}
+#main-menu-links li.first {
+  margin-left: 0;
+  padding-left: 0;
+}
+
+div.breadcrumb {
+  margin-left: 1px;
+}
+
+#featured {
+  padding-top: 30px;
+  padding-bottom: 30px;
+}
+.region-featured {
+  margin-left: 15px;
+}
+.region-featured .content {
+  margin-top: 0;
+}
