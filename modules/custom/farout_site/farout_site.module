@@ -1,0 +1,52 @@
+<?php
+/**
+ * @file
+ * Custom functionality for the Far Out Effects site.
+ */
+
+/* --- HOOKS --------------------------------------------------------------- */
+
+/**
+ * Implements hook_node_view().
+ */
+function farout_site_node_view($node, $view_mode, $langcode) {
+  if ('farout_product_display' == $node->type) {
+    if (!empty($node->field_farout_product_category['und'][0])) {
+      $tid = $node->field_farout_product_category['und'][0]['tid'];
+
+      $item = menu_get_item();
+      $item['href'] = 'taxonomy/term/' . $tid;
+      menu_set_item(NULL, $item);
+
+      drupal_set_breadcrumb(_farout_site_get_breadcrumbs());
+    }
+  }
+}
+
+/* --- UTILITY -------------------------------------------------------------- */
+
+function _farout_site_get_breadcrumbs() {
+  $item = menu_get_item();
+  $tree = menu_tree_page_data('main-menu');
+  $crumbs = array(l(t('Home'), '<front>'));
+  _farout_site_recurse_crumbs($tree, $item, $crumbs);
+  return $crumbs;
+}
+
+function _farout_site_recurse_crumbs($tree, $item, &$crumbs, $above = array()) {
+  foreach ($tree as $menu_item) {
+    if (!$menu_item['link']['in_active_trail']) {
+      continue;
+    }
+    if ($menu_item['link']['link_path'] == $item['href']) {
+      foreach ($above as $trail_item) {
+        $crumbs[] = l($trail_item['link']['link_title'], $trail_item['link']['link_path']);
+      }
+      $crumbs[] = l($menu_item['link']['link_title'], $menu_item['link']['link_path']);
+      break;
+    }
+    if (is_array($menu_item['below'])) {
+      _farout_site_recurse_crumbs($menu_item['below'], $item, $crumbs, array_merge($above, array($menu_item)));
+    }
+  }
+}
