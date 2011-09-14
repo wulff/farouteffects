@@ -55,6 +55,7 @@ dependencies[] = pathauto
 dependencies[] = rules
 dependencies[] = rules_admin
 dependencies[] = strongarm
+dependencies[] = taxonomy_menu
 dependencies[] = token
 dependencies[] = variable
 dependencies[] = views

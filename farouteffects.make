@@ -70,6 +70,9 @@ projects[rules][version] = 2.x-dev
 projects[strongarm][subdir] = contrib
 projects[strongarm][version] = 2.0-beta2
 
+projects[taxonomy_menu][subdir] = contrib
+projects[taxonomy_menu][version] = 1.2
+
 projects[token][subdir] = contrib
 projects[token][version] = 1.0-beta5
 
