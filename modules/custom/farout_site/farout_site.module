@@ -7,6 +7,15 @@
 /* --- HOOKS --------------------------------------------------------------- */
 
 /**
+ * Implements hook_views_api().
+ */
+function farout_site_views_api($module, $api) {
+  if ($module == 'views' && $api == 'views_default') {
+    return array('version' => 2);
+  }
+}
+
+/**
  * Implements hook_node_view().
  */
 function farout_site_node_view($node, $view_mode, $langcode) {
