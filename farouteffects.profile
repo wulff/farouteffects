@@ -735,16 +735,6 @@ function _farouteffects_add_menu_items() {
       'link_path' => '<front>',
       'menu_name' => 'main-menu',
     ),
-    array(
-      'link_title' => st('Shop'),
-      'link_path' => '<front>',
-      'menu_name' => 'main-menu',
-    ),
-    array(
-      'link_title' => st('Portfolio'),
-      'link_path' => '<front>',
-      'menu_name' => 'main-menu',
-    ),
   );
   foreach ($items as $item) {
     menu_link_save($item);
