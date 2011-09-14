@@ -1,5 +1,4 @@
 <?php
-
 /**
  * @file
  * Install profile for the Far Out Effects site. Based on Commerce Kickstart
@@ -730,12 +729,26 @@ function _farouteffects_add_shortcuts() {
  * Add menu items.
  */
 function _farouteffects_add_menu_items() {
-  $item = array(
-    'link_title' => st('Home'),
-    'link_path' => '<front>',
-    'menu_name' => 'main-menu',
+  $items = array(
+    array(
+      'link_title' => st('Home'),
+      'link_path' => '<front>',
+      'menu_name' => 'main-menu',
+    ),
+    array(
+      'link_title' => st('Shop'),
+      'link_path' => '<front>',
+      'menu_name' => 'main-menu',
+    ),
+    array(
+      'link_title' => st('Portfolio'),
+      'link_path' => '<front>',
+      'menu_name' => 'main-menu',
+    ),
   );
-  menu_link_save($item);
+  foreach ($items as $item) {
+    menu_link_save($item);
+  }
 
   menu_rebuild();
 }
