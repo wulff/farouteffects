@@ -5,7 +5,7 @@
  * and Localized Install.
  */
 
-// TODO: move variable definitions to strongarm.inc
+// TODO: move important variable definitions to strongarm.inc
 
 /* --- HOOKS ---------------------------------------------------------------- */
 
@@ -134,7 +134,7 @@ function _farouteffects_add_default_text_format() {
  * Enable blocks.
  */
 function _farouteffects_enable_blocks() {
-  $theme = variable_get('theme_default', 'bartik');
+  $theme = 'ash';
   $values = array(
     array(
       'module' => 'system',
@@ -143,7 +143,9 @@ function _farouteffects_enable_blocks() {
       'status' => 1,
       'weight' => 0,
       'region' => 'content',
+      'visibility' => 0,
       'pages' => '',
+      'title' => '',
       'cache' => -1,
     ),
     array(
@@ -153,7 +155,9 @@ function _farouteffects_enable_blocks() {
       'status' => 0,
       'weight' => -1,
       'region' => 'sidebar_first',
+      'visibility' => 0,
       'pages' => '',
+      'title' => '',
       'cache' => -1,
     ),
     array(
@@ -163,17 +167,9 @@ function _farouteffects_enable_blocks() {
       'status' => 1,
       'weight' => 10,
       'region' => 'sidebar_first',
+      'visibility' => 0,
       'pages' => '',
-      'cache' => -1,
-    ),
-    array(
-      'module' => 'system',
-      'delta' => 'navigation',
-      'theme' => $theme,
-      'status' => 1,
-      'weight' => 0,
-      'region' => 'sidebar_first',
-      'pages' => '',
+      'title' => '',
       'cache' => -1,
     ),
     array(
@@ -183,7 +179,9 @@ function _farouteffects_enable_blocks() {
       'status' => 1,
       'weight' => 0,
       'region' => 'help',
+      'visibility' => 0,
       'pages' => '',
+      'title' => '',
       'cache' => -1,
     ),
     array(
@@ -193,26 +191,42 @@ function _farouteffects_enable_blocks() {
       'status' => 1,
       'weight' => 0,
       'region' => 'sidebar_first',
+      'visibility' => 0,
       'pages' => "cart\ncheckout/*",
+      'title' => '',
       'cache' => -1,
     ),
-/*
     array(
-      'module' => 'node',
-      'delta' => 'recent',
-      'theme' => $admin_theme,
+      'module' => 'menu_block',
+      'delta' => 1,
+      'theme' => $theme,
       'status' => 1,
-      'weight' => 10,
-      'region' => 'dashboard_main',
-      'pages' => '',
+      'weight' => 0,
+      'region' => 'sidebar_first',
+      'visibility' => 0,
+      'pages' => "cart\ncheckout/*",
+      'title' => 'Categories',
       'cache' => -1,
     ),
-*/
+    array(
+      'module' => 'views',
+      'delta' => 'featured_products-block',
+      'theme' => $theme,
+      'status' => 1,
+      'weight' => 0,
+      'region' => 'featured',
+      'visibility' => 1,
+      'pages' => '<front>',
+      'title' => '',
+      'cache' => -1,
+    ),
   );
-  $query = db_insert('block')->fields(array('module', 'delta', 'theme', 'status', 'weight', 'region', 'pages', 'cache'));
+
+  $query = db_insert('block')->fields(array('module', 'delta', 'theme', 'status', 'weight', 'region', 'visibility', 'pages', 'title', 'cache'));
   foreach ($values as $record) {
     $query->values($record);
   }
+
   $query->execute();
 }
 
@@ -741,6 +755,13 @@ function _farouteffects_add_menu_items() {
   }
 
   menu_rebuild();
+
+  variable_set('taxonomy_menu_path_2', 'taxonomy_menu_path_default');
+  variable_set('taxonomy_menu_rebuild_2', 1);
+  variable_set('taxonomy_menu_vocab_menu_2', 'main-menu');
+  variable_set('taxonomy_menu_vocab_parent_2', '0');
+
+  // TODO: rebuild taxonomy menu
 }
 
 /**
@@ -775,6 +796,7 @@ function _farouteffects_update_permissions() {
 function _farouteffects_update_variables() {
   // basic settings
   variable_set('site_slogan', 'Makeup Artist Anders Funch Lerche');
+  variable_set('site_frontpage', 'news');
 
   // image handling
   variable_set('image_jpeg_quality', 90);
@@ -866,4 +888,15 @@ function _farouteffects_update_variables() {
     'format' => 'default',
   );
   variable_set('commerce_checkout_completion_message', $completion_message);
+
+  // menu block settings
+  variable_set('menu_block_1_admin_title', '');
+  variable_set('menu_block_1_depth', '0');
+  variable_set('menu_block_1_expanded', 0);
+  variable_set('menu_block_1_follow', 0);
+  variable_set('menu_block_1_level', '2');
+  variable_set('menu_block_1_parent', 'main-menu:0');
+  variable_set('menu_block_1_sort', 0);
+  variable_set('menu_block_1_title_link', 0);
+  variable_set('menu_block_ids', array(1));
 }
