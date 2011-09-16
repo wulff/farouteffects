@@ -1,6 +1,6 @@
 name = Migrate Goldmine Gallery
 description = Move data from old gallery to new site.
-package = Development
+package = Far Out Effects
 core = 7.x
 ;dependencies[] = taxonomy
 dependencies[] = image

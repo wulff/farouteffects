@@ -89,6 +89,7 @@ dependencies[] = commerce_tax_ui
 ; custom modules
 
 dependencies[] = farout_migrate
+dependencies[] = farout_site
 
 ; files
 

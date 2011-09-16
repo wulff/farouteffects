@@ -128,6 +128,36 @@ function _farouteffects_add_default_text_format() {
   );
   $default_text_format = (object) $default_text_format;
   filter_format_save($default_text_format);
+
+  $filtered_html_format = array(
+    'format' => 'filtered_html',
+    'name' => 'Filtered HTML',
+    'weight' => 0,
+    'filters' => array(
+      // URL filter.
+      'filter_url' => array(
+        'weight' => 0,
+        'status' => 1,
+      ),
+      // HTML filter.
+      'filter_html' => array(
+        'weight' => 1,
+        'status' => 1,
+      ),
+      // Line break filter.
+      'filter_autop' => array(
+        'weight' => 2,
+        'status' => 1,
+      ),
+      // HTML corrector filter.
+      'filter_htmlcorrector' => array(
+        'weight' => 10,
+        'status' => 1,
+      ),
+    ),
+  );
+  $filtered_html_format = (object) $filtered_html_format;
+  filter_format_save($filtered_html_format);
 }
 
 /**
@@ -749,17 +779,22 @@ function _farouteffects_add_menu_items() {
       'link_path' => '<front>',
       'menu_name' => 'main-menu',
     ),
+    array(
+      'link_title' => st('Contact'),
+      'link_path' => 'contact',
+      'menu_name' => 'main-menu',
+    ),
   );
   foreach ($items as $item) {
     menu_link_save($item);
   }
 
-  menu_rebuild();
-
   variable_set('taxonomy_menu_path_2', 'taxonomy_menu_path_default');
   variable_set('taxonomy_menu_rebuild_2', 1);
   variable_set('taxonomy_menu_vocab_menu_2', 'main-menu');
   variable_set('taxonomy_menu_vocab_parent_2', '0');
+
+  menu_rebuild();
 
   // TODO: rebuild taxonomy menu
 }
