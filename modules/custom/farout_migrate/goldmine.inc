@@ -27,7 +27,8 @@ class FarOutGoldmineNodeMigration extends FarOutGoldmineMigration {
     // $this->dependencies = array();
 
     // imported items are identified by the picture id (pid) field
-    $this->map = new MigrateSQLMap($this->machineName,
+    $this->map = new MigrateSQLMap(
+      $this->machineName,
       array(
         'pid' => array(
           'type' => 'int',

@@ -2,4 +2,5 @@
 libraries
 modules/contrib
 modules/custom/farout_migrate/import/*
+notes.txt
 themes/contrib

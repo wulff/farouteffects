@@ -71,11 +71,11 @@ a.feed-icon {
 
 /* featured products */
 
-.view-featured-products .view-content .item-list ul  {
+.view-farout-featured-products .view-content .item-list ul  {
   margin: 0;
   padding: 0;
 }
-.view-featured-products .view-content .item-list ul li {
+.view-farout-featured-products .view-content .item-list ul li {
   list-style-type: none;
   margin: 0 30px 0 0;
   padding: 0;
@@ -85,17 +85,17 @@ a.feed-icon {
   line-height: 0.1;
   background-color: #feddef;
 }
-.view-featured-products .view-content .item-list ul li.views-row-4 {
+.view-farout-featured-products .view-content .item-list ul li.views-row-4 {
   margin-right: 0;
 }
-.view-featured-products .view-content .item-list ul li .views-field-title {
+.view-farout-featured-products .view-content .item-list ul li .views-field-title {
   position: absolute;
   background-color: rgba(0, 0, 0, 0.7);
   padding: 5px 5px 7px 5px;
   width: 200px;
   bottom: 0px;
 }
-.view-featured-products .view-content .item-list ul li .views-field-title a {
+.view-farout-featured-products .view-content .item-list ul li .views-field-title a {
   color: #fff;
   line-height: 1.1;
   text-align: normal;

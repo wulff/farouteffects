@@ -32,6 +32,45 @@ function farout_site_node_view($node, $view_mode, $langcode) {
   }
 }
 
+/**
+ * Implements hook_image_default_styles().
+ */
+function farout_site_image_default_styles() {
+  $styles = array();
+
+  $styles['farout_featured'] = array(
+    'effects' => array(
+      array(
+        'name' => 'image_scale_and_crop',
+        'data' => array('width' => 210, 'height' => 210),
+        'weight' => 0,
+      ),
+    )
+  );
+
+  $styles['farout_large'] = array(
+    'effects' => array(
+      array(
+        'name' => 'image_scale',
+        'data' => array('width' => 690, 'height' => 690, 'upscale' => 0),
+        'weight' => 0,
+      ),
+    )
+  );
+
+  $styles['farout_thumbnail'] = array(
+    'effects' => array(
+      array(
+        'name' => 'image_scale_and_crop',
+        'data' => array('width' => 165, 'height' => 165),
+        'weight' => 0,
+      ),
+    )
+  );
+
+  return $styles;
+}
+
 /* --- UTILITY -------------------------------------------------------------- */
 
 function _farout_site_get_breadcrumbs() {

@@ -81,6 +81,10 @@ function farouteffects_import_translation(&$install_state) {
   $install_locale = $install_state['parameters']['locale'];
   locale_add_language($install_locale, NULL, NULL, NULL, '', NULL, 1, TRUE);
 
+  // add danish as secondary language
+//  locale_add_language('da', 'Danish', 'Dansk', LANGUAGE_LTR, '', 'da', TRUE, FALSE);
+
+/*
   // Build batch with l10n_update module.
   $history = l10n_update_get_history();
   module_load_include('check.inc', 'l10n_update');
@@ -91,6 +95,7 @@ function farouteffects_import_translation(&$install_state) {
   $updates = _l10n_update_prepare_updates($updates, NULL, array());
   $batch = l10n_update_batch_multiple($updates, LOCALE_IMPORT_KEEP);
   return $batch;
+*/
 }
 
 /* --- UTILITY -------------------------------------------------------------- */
@@ -240,13 +245,25 @@ function _farouteffects_enable_blocks() {
     ),
     array(
       'module' => 'views',
-      'delta' => 'featured_products-block',
+      'delta' => 'farout_featured_products-block',
       'theme' => $theme,
       'status' => 1,
       'weight' => 0,
       'region' => 'featured',
       'visibility' => 1,
       'pages' => '<front>',
+      'title' => '',
+      'cache' => -1,
+    ),
+    array(
+      'module' => 'locale',
+      'delta' => 'language',
+      'theme' => $theme,
+      'status' => 1,
+      'weight' => 0,
+      'region' => 'header',
+      'visibility' => 0,
+      'pages' => '',
       'title' => '',
       'cache' => -1,
     ),
@@ -566,7 +583,7 @@ function _farouteffects_add_fields() {
     'required' => FALSE,
 
     'settings' => array(
-      'file_directory' => 'projects', // TODO: change?
+      'file_directory' => 'images/product',
       'file_extensions' => 'png gif jpg jpeg',
       'max_filesize' => '',
       'max_resolution' => '',
@@ -629,7 +646,7 @@ function _farouteffects_add_fields() {
     'required' => FALSE,
 
     'settings' => array(
-      'file_directory' => 'inline/page',
+      'file_directory' => 'images/inline',
       'file_extensions' => 'png gif jpg jpeg',
       'max_filesize' => '',
       'max_resolution' => '',
@@ -673,7 +690,7 @@ function _farouteffects_add_fields() {
     'required' => FALSE,
 
     'settings' => array(
-      'file_directory' => 'inline/story',
+      'file_directory' => 'images/inline',
       'file_extensions' => 'png gif jpg jpeg',
       'max_filesize' => '',
       'max_resolution' => '',
@@ -747,6 +764,8 @@ function _farouteffects_add_fields() {
     ),
   );
   field_create_instance($instance);
+
+  // TODO: update 'field_bundle_settings' variable to hide language field from display
 }
 
 /**
@@ -773,30 +792,27 @@ function _farouteffects_add_shortcuts() {
  * Add menu items.
  */
 function _farouteffects_add_menu_items() {
+/*
   $items = array(
     array(
       'link_title' => st('Home'),
       'link_path' => '<front>',
       'menu_name' => 'main-menu',
+      'weight' => 1,
     ),
     array(
       'link_title' => st('Contact'),
       'link_path' => 'contact',
       'menu_name' => 'main-menu',
+      'weight' => 2,
     ),
   );
   foreach ($items as $item) {
     menu_link_save($item);
   }
 
-  variable_set('taxonomy_menu_path_2', 'taxonomy_menu_path_default');
-  variable_set('taxonomy_menu_rebuild_2', 1);
-  variable_set('taxonomy_menu_vocab_menu_2', 'main-menu');
-  variable_set('taxonomy_menu_vocab_parent_2', '0');
-
   menu_rebuild();
-
-  // TODO: rebuild taxonomy menu
+*/
 }
 
 /**
@@ -923,6 +939,12 @@ function _farouteffects_update_variables() {
     'format' => 'default',
   );
   variable_set('commerce_checkout_completion_message', $completion_message);
+
+  // taxonomy menu settings
+  variable_set('taxonomy_menu_path_2', 'taxonomy_menu_path_default');
+  variable_set('taxonomy_menu_rebuild_2', 1);
+  variable_set('taxonomy_menu_vocab_menu_2', 'main-menu');
+  variable_set('taxonomy_menu_vocab_parent_2', '0');
 
   // menu block settings
   variable_set('menu_block_1_admin_title', '');

@@ -99,7 +99,7 @@ function farout_site_views_default_views() {
   $view = new view;
   $view->name = 'farout_product_browser';
   $view->description = '';
-  $view->tag = 'default';
+  $view->tag = 'farout';
   $view->base_table = 'node';
   $view->human_name = 'Product browser';
   $view->core = 7;
@@ -327,6 +327,113 @@ function farout_site_views_default_views() {
     t('Feed'),
   );
   $views['farout_taxonomy_term'] = $view;
+
+  $view = new view;
+  $view->name = 'farout_featured_products';
+  $view->description = 'Display the latest promoted products.';
+  $view->tag = 'farout';
+  $view->base_table = 'node';
+  $view->human_name = 'Featured products';
+  $view->core = 7;
+  $view->api_version = '3.0';
+  $view->disabled = FALSE; /* Edit this to true to make a default view disabled initially */
+
+  /* Display: Master */
+  $handler = $view->new_display('default', 'Master', 'default');
+  $handler->display->display_options['access']['type'] = 'perm';
+  $handler->display->display_options['cache']['type'] = 'none';
+  $handler->display->display_options['query']['type'] = 'views_query';
+  $handler->display->display_options['query']['options']['query_comment'] = FALSE;
+  $handler->display->display_options['exposed_form']['type'] = 'basic';
+  $handler->display->display_options['pager']['type'] = 'some';
+  $handler->display->display_options['pager']['options']['items_per_page'] = '4';
+  $handler->display->display_options['style_plugin'] = 'list';
+  $handler->display->display_options['row_plugin'] = 'fields';
+  /* Field: Content: Images */
+  $handler->display->display_options['fields']['field_farout_product_display_img']['id'] = 'field_farout_product_display_img';
+  $handler->display->display_options['fields']['field_farout_product_display_img']['table'] = 'field_data_field_farout_product_display_img';
+  $handler->display->display_options['fields']['field_farout_product_display_img']['field'] = 'field_farout_product_display_img';
+  $handler->display->display_options['fields']['field_farout_product_display_img']['label'] = '';
+  $handler->display->display_options['fields']['field_farout_product_display_img']['alter']['alter_text'] = 0;
+  $handler->display->display_options['fields']['field_farout_product_display_img']['alter']['make_link'] = 0;
+  $handler->display->display_options['fields']['field_farout_product_display_img']['alter']['absolute'] = 0;
+  $handler->display->display_options['fields']['field_farout_product_display_img']['alter']['external'] = 0;
+  $handler->display->display_options['fields']['field_farout_product_display_img']['alter']['replace_spaces'] = 0;
+  $handler->display->display_options['fields']['field_farout_product_display_img']['alter']['trim_whitespace'] = 0;
+  $handler->display->display_options['fields']['field_farout_product_display_img']['alter']['nl2br'] = 0;
+  $handler->display->display_options['fields']['field_farout_product_display_img']['alter']['word_boundary'] = 1;
+  $handler->display->display_options['fields']['field_farout_product_display_img']['alter']['ellipsis'] = 1;
+  $handler->display->display_options['fields']['field_farout_product_display_img']['alter']['strip_tags'] = 0;
+  $handler->display->display_options['fields']['field_farout_product_display_img']['alter']['trim'] = 0;
+  $handler->display->display_options['fields']['field_farout_product_display_img']['alter']['html'] = 0;
+  $handler->display->display_options['fields']['field_farout_product_display_img']['element_label_colon'] = FALSE;
+  $handler->display->display_options['fields']['field_farout_product_display_img']['element_default_classes'] = 1;
+  $handler->display->display_options['fields']['field_farout_product_display_img']['hide_empty'] = 0;
+  $handler->display->display_options['fields']['field_farout_product_display_img']['empty_zero'] = 0;
+  $handler->display->display_options['fields']['field_farout_product_display_img']['hide_alter_empty'] = 0;
+  $handler->display->display_options['fields']['field_farout_product_display_img']['click_sort_column'] = 'fid';
+  $handler->display->display_options['fields']['field_farout_product_display_img']['settings'] = array(
+    'image_style' => 'farout_featured',
+    'image_link' => 'content',
+  );
+  $handler->display->display_options['fields']['field_farout_product_display_img']['group_rows'] = 1;
+  $handler->display->display_options['fields']['field_farout_product_display_img']['delta_offset'] = '0';
+  $handler->display->display_options['fields']['field_farout_product_display_img']['delta_reversed'] = 0;
+  $handler->display->display_options['fields']['field_farout_product_display_img']['field_api_classes'] = 0;
+  /* Field: Content: Title */
+  $handler->display->display_options['fields']['title']['id'] = 'title';
+  $handler->display->display_options['fields']['title']['table'] = 'node';
+  $handler->display->display_options['fields']['title']['field'] = 'title';
+  $handler->display->display_options['fields']['title']['label'] = '';
+  $handler->display->display_options['fields']['title']['alter']['alter_text'] = 0;
+  $handler->display->display_options['fields']['title']['alter']['make_link'] = 0;
+  $handler->display->display_options['fields']['title']['alter']['absolute'] = 0;
+  $handler->display->display_options['fields']['title']['alter']['word_boundary'] = 0;
+  $handler->display->display_options['fields']['title']['alter']['ellipsis'] = 0;
+  $handler->display->display_options['fields']['title']['alter']['strip_tags'] = 0;
+  $handler->display->display_options['fields']['title']['alter']['trim'] = 0;
+  $handler->display->display_options['fields']['title']['alter']['html'] = 0;
+  $handler->display->display_options['fields']['title']['hide_empty'] = 0;
+  $handler->display->display_options['fields']['title']['empty_zero'] = 0;
+  $handler->display->display_options['fields']['title']['link_to_node'] = 1;
+  /* Sort criterion: Content: Post date */
+  $handler->display->display_options['sorts']['created']['id'] = 'created';
+  $handler->display->display_options['sorts']['created']['table'] = 'node';
+  $handler->display->display_options['sorts']['created']['field'] = 'created';
+  $handler->display->display_options['sorts']['created']['order'] = 'DESC';
+  /* Filter criterion: Content: Published */
+  $handler->display->display_options['filters']['status']['id'] = 'status';
+  $handler->display->display_options['filters']['status']['table'] = 'node';
+  $handler->display->display_options['filters']['status']['field'] = 'status';
+  $handler->display->display_options['filters']['status']['value'] = 1;
+  $handler->display->display_options['filters']['status']['group'] = 0;
+  $handler->display->display_options['filters']['status']['expose']['operator'] = FALSE;
+  /* Filter criterion: Content: Type */
+  $handler->display->display_options['filters']['type']['id'] = 'type';
+  $handler->display->display_options['filters']['type']['table'] = 'node';
+  $handler->display->display_options['filters']['type']['field'] = 'type';
+  $handler->display->display_options['filters']['type']['value'] = array(
+    'farout_product_display' => 'farout_product_display',
+  );
+  /* Filter criterion: Content: Promoted to front page */
+  $handler->display->display_options['filters']['promote']['id'] = 'promote';
+  $handler->display->display_options['filters']['promote']['table'] = 'node';
+  $handler->display->display_options['filters']['promote']['field'] = 'promote';
+  $handler->display->display_options['filters']['promote']['value'] = '1';
+
+  /* Display: Block */
+  $handler = $view->new_display('block', 'Block', 'block');
+  $translatables['farout_featured_products'] = array(
+    t('Master'),
+    t('more'),
+    t('Apply'),
+    t('Reset'),
+    t('Sort by'),
+    t('Asc'),
+    t('Desc'),
+    t('Block'),
+  );
+  $views['farout_featured_products'] = $view;
 
   return $views;
 }
