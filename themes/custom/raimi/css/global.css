@@ -1,1 +1,231 @@
 /* This file will hold the main styles for your website. */
+
+@font-face {
+  font-family: 'BoycottRegular';
+  src: url('../fonts/boycott/boycott.eot');
+  src: url('../fonts/boycott/boycott.eot?#iefix') format('embedded-opentype'),
+       url('../fonts/boycott/boycott.woff') format('woff'),
+       url('../fonts/boycott/boycott.ttf') format('truetype'),
+       url('../fonts/boycott/boycott.svg#BoycottRegular') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* basic elements */
+
+body {
+  background-color: #000;
+  color: #d00;
+}
+
+a,
+a:link,
+a:visited {
+  text-decoration: none;
+  color: #d00;
+}
+a:hover {
+  color: #f00;
+}
+a.feed-icon {
+  clear: both;
+  display: none;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'BoycottRegular',Verdana,Helvetica,Arial,sans-serif;
+  letter-spacing: -0.05em;
+}
+
+h1.title {
+  font-size: 18px;
+  margin-top: 20px;
+  margin-bottom: 0;
+}
+h2.block-title {
+  margin-top: 20px;
+}
+
+table {
+  border: none;
+}
+thead th, th {
+  color: #d00;
+  background-color: #000;
+  border-bottom: 1px solid #d00;
+}
+tr.even, tr.odd,
+tr.even td, tr.odd td {
+  background-color: #000;
+  border-bottom: 1px solid #d00;
+} 
+
+/* header */
+
+#zone-user-wrapper {
+  margin-top: 0.5em;
+}
+#zone-branding-wrapper {
+  margin-top: 1em;
+}
+#zone-menu-wrapper {
+  margin-top: 0.5em;
+}
+#zone-featured-wrapper {
+  margin-top: 2.5em;
+}
+#zone-content-wrapper {
+  margin-top: 2.5em;
+}
+
+#section-header .block li {
+  list-style: none outside none;
+}
+#section-header .block-locale h2 {
+  display: none;
+}
+#section-header .block p,
+#section-header .block ul {
+  margin-bottom: 0.5em;
+}
+
+#region-user-first {
+  font-weight: bold;
+}
+
+/* language switcher */
+
+#section-header .block-locale li {
+  display: inline;
+  padding: 0 1em 0 0;
+}
+#section-header .block-locale li a {
+  white-space: nowrap;
+  color: #d00;
+}
+#section-header .block-locale li a:hover {
+  color: #f00;
+}
+#section-header .block-locale li a img {
+  margin-bottom: 3px;
+}
+
+/* menu */
+
+#region-menu ul.inline li {
+  padding: 0;
+  margin-top: 1em;
+  margin-right: 1em;
+  float: left;
+}
+#main-menu li a {
+  background-color: #d00;
+  border-radius: 3px;
+  -moz-border-radius: 3px;
+  -webkit-border-radius: 3px;
+  color: #000;
+  padding: 2px 6px 4px 6px;
+  text-transform: uppercase;
+}
+#main-menu li a.active,
+#main-menu li a.active-trail {
+  background-color: #600;
+  color: #eee;
+}
+
+/* product grid */
+
+.view-farout-taxonomy-term .view-content .item-list ul  {
+  margin: 0;
+  padding: 0;
+}
+.view-farout-taxonomy-term .view-content .item-list ul li {
+  list-style-type: none;
+  margin: 0 20px 20px 0;
+  padding: 0;
+  float: left;
+  position: relative;
+  line-height: 0.1;
+}
+.view-farout-taxonomy-term .view-content .item-list ul li.views-row-3,
+.view-farout-taxonomy-term .view-content .item-list ul li.views-row-6,
+.view-farout-taxonomy-term .view-content .item-list ul li.views-row-9,
+.view-farout-taxonomy-term .view-content .item-list ul li.views-row-12 {
+  margin-right: 0;
+}
+.view-farout-taxonomy-term .view-content .item-list ul li .views-field-title {
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0.7);
+  padding: 5px 5px 7px 5px;
+  bottom: 0px;
+}
+.view-farout-taxonomy-term .view-content .item-list ul li .views-field-title a {
+  color: #fff;
+  line-height: 1.1;
+  text-decoration: none;
+}
+
+/* featured products */
+
+#zone-featured-wrapper {
+  padding-top: 20px;
+  padding-bottom: 20px;
+  background: #111 url(../assets/featured_v.jpg) no-repeat;
+}
+
+.view-farout-featured-products .view-content .item-list ul  {
+  margin: 0;
+  padding: 0;
+}
+.view-farout-featured-products .view-content .item-list ul li {
+  list-style-type: none;
+  margin: 20px 0 0 10px;
+  padding: 0;
+  width: 220px;
+  position: relative;
+  line-height: 0.1;
+  background-color: #feddef;
+}
+.view-farout-featured-products .view-content .item-list ul li.views-row-1 {
+  margin-top: 0;
+}
+.view-farout-featured-products .view-content .item-list ul li .views-field-title {
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0.7);
+  padding: 5px 5px 7px 5px;
+  width: 210px;
+  bottom: 0px;
+}
+.view-farout-featured-products .view-content .item-list ul li .views-field-title a {
+  color: #fff;
+  line-height: 1.1;
+  text-align: normal;
+  text-shadow: none;
+  font-size: 80%;
+}
+
+/* menu block */
+
+.menu-block-wrapper ul li.leaf {
+  list-style: none outside none;
+  margin: 0;
+}
+.menu-block-wrapper ul li a.active {
+  color: #f00;
+  font-weight: bold;
+}
+
+/* footer */
+
+.region-footer-second-inner {
+  border-top: 1px solid #d00;
+  margin-top: 1em;
+  padding-top: 1em;
+}
+
+span.element {
+  display: block;
+}
+span.spacer {
+  display: none;
+}

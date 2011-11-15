@@ -62,7 +62,7 @@ function farout_site_image_default_styles() {
     'effects' => array(
       array(
         'name' => 'image_scale_and_crop',
-        'data' => array('width' => 165, 'height' => 165),
+        'data' => array('width' => 220, 'height' => 220),
         'weight' => 0,
       ),
     )

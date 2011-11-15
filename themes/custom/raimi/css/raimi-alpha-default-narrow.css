@@ -1,1 +1,68 @@
-/* This file will hold styles that are loaded using the same media query as the narrow grid. */
+/* This file will hold styles that are loaded using the same media query as the normal grid. */
+
+h1.title {
+  margin-top: 0;
+}
+h2.block-title {
+  margin-top: 20px;
+}
+.block-commerce-cart h2.block-title {
+  margin-top: 0;
+}
+
+/* language switcher */
+
+#section-header .block-locale ul {
+  float: right;
+}
+#section-header .block-locale li {
+  padding: 0 0 0 1em;
+}
+
+/* product grid */
+
+.view-farout-taxonomy-term .view-content .item-list ul li {
+  width: 160px;
+}
+.view-farout-taxonomy-term .view-content .item-list ul li .views-field-title {
+  width: 150px;
+}
+.view-farout-taxonomy-term .view-content .item-list ul li img {
+  width: 160px;
+  height: 160px;
+}
+
+/* featured products */
+
+#zone-featured-wrapper {
+  background: #111 url(../assets/featured_h.jpg) no-repeat;
+}
+
+.view-farout-featured-products .view-content .item-list ul li {
+  margin: 0 20px 0 0;
+  padding: 0;
+  width: 160px;
+  position: relative;
+  float: left;
+  line-height: 0.1;
+  background-color: #feddef;
+}
+.view-farout-featured-products .view-content .item-list ul li.views-row-4 {
+  margin-right: 0;
+}
+.view-farout-featured-products .view-content .item-list ul li .views-field-title {
+  width: 150px;
+}
+.view-farout-featured-products .view-content .item-list ul li img {
+  width: 160px;
+  height: 160px;
+}
+
+/* footer */
+
+span.element {
+  display: inline;
+}
+span.spacer {
+  display: inline;
+}

@@ -18,6 +18,7 @@ regions[user_second] = User Bar Second
 
 regions[branding] = Branding
 regions[menu] = Menu
+regions[featured] = Featured
 
 regions[sidebar_first] = Sidebar First
 regions[sidebar_second] = Sidebar Second
@@ -42,6 +43,7 @@ regions[footer_second] = Footer Second
 zones[user] = User
 zones[branding] = Branding
 zones[menu] = Menu
+zones[featured] = Featured
 zones[header] = Header
 zones[preface] = Preface
 zones[content] = Content
