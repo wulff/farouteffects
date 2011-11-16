@@ -1,0 +1,6 @@
+name = Dummy payment
+description = Provides a dummy payment method for the Far Out Effects site.
+package = Farout
+dependencies[] = commerce
+dependencies[] = commerce_payment
+core = 7.x

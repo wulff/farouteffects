@@ -18,19 +18,22 @@ function farout_site_views_api($module, $api) {
 /**
  * Implements hook_node_view().
  */
+/*
 function farout_site_node_view($node, $view_mode, $langcode) {
   if ('farout_product_display' == $node->type && 'teaser' != $view_mode) {
     if (!empty($node->field_farout_product_category['und'][0])) {
       $tid = $node->field_farout_product_category['und'][0]['tid'];
 
       $item = menu_get_item();
+      $item['path'] = 'taxonomy/term/%';
       $item['href'] = 'taxonomy/term/' . $tid;
       menu_set_item(NULL, $item);
-
+//dpm($item);
       drupal_set_breadcrumb(_farout_site_get_breadcrumbs());
     }
   }
 }
+*/
 
 /**
  * Implements hook_image_default_styles().

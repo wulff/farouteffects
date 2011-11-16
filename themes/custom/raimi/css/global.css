@@ -216,6 +216,10 @@ tr.even td, tr.odd td {
   font-weight: bold;
 }
 
+.menu-block-wrapper ul.menu li {
+  margin: 0;
+}
+
 /* footer */
 
 .region-footer-second-inner {

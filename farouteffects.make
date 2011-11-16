@@ -67,6 +67,9 @@ projects[markdown][version] = 1.0
 projects[menu_block][subdir] = contrib
 projects[menu_block][version] = 2.x-dev
 
+projects[menu_position][subdir] = contrib
+projects[menu_position][version] = 1.0
+
 projects[migrate][subdir] = contrib
 projects[migrate][version] = 2.2
 
@@ -77,7 +80,7 @@ projects[rules][subdir] = contrib
 projects[rules][version] = 2.0
 
 projects[strongarm][subdir] = contrib
-projects[strongarm][version] = 2.0-beta2
+projects[strongarm][version] = 2.0-beta4
 
 projects[token][subdir] = contrib
 projects[token][version] = 1.0-beta7
@@ -90,6 +93,12 @@ projects[variable][version] = 1.1
 
 projects[views][subdir] = contrib
 projects[views][version] = 3.x-dev
+
+projects[workbench][subdir] = contrib
+projects[workbench][version] = 1.1
+
+projects[workbench_files][subdir] = contrib
+projects[workbench_files][version] = 1.0
 
 ; themes
 

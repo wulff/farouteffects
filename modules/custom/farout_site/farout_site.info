@@ -1,5 +1,5 @@
 name = Far Out Site
 description = Custom functionality for the Far Out Effects site.
-package = Far Out Effects
+package = Farout
 core = 7.x
 dependencies[] = views
