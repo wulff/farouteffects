@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the Farout Product Display feature.
+ */
+
+include_once('farout_product_display.features.inc');

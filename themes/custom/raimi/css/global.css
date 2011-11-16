@@ -210,7 +210,8 @@ tr.even td, tr.odd td {
   list-style: none outside none;
   margin: 0;
 }
-.menu-block-wrapper ul li a.active {
+.menu-block-wrapper ul li a.active,
+.menu-block-wrapper ul li a.active-trail {
   color: #f00;
   font-weight: bold;
 }

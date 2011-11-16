@@ -20,6 +20,13 @@ h2.block-title {
   padding: 0 0 0 1em;
 }
 
+/* node */
+
+.node-farout-product-display .content .field-type-image img {
+  width: 460px;
+  height: auto;
+}
+
 /* product grid */
 
 .view-farout-taxonomy-term .view-content .item-list ul li {
@@ -57,4 +64,19 @@ h2.block-title {
 .view-farout-featured-products .view-content .item-list ul li img {
   width: 220px;
   height: 220px;
+}
+
+/* latest & related products */
+
+.view-farout-related-products .view-content .field-type-image img,
+.view-farout-latest-products .view-content .field-type-image img {
+  width: 220px;
+  height: 220px;
+}
+
+/* news */
+
+.view-farout-latest-news .field-type-image img {
+  width: 140px;
+  height: 140px;
 }
